@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Towns.Models;
 
 namespace Towns.Controllers
@@ -14,25 +15,35 @@ namespace Towns.Controllers
         {
             return View();
         }
-
-        public IActionResult About()
+        private TownsContext db;
+        public HomeController(TownsContext context)
         {
-            ViewData["Message"] = "Your application description page.";
-
-            return View();
+            db = context;
+        }
+        public async Task<IActionResult> Town()
+        {
+            return View(await db.Towns.ToListAsync());
         }
 
-        public IActionResult Contact()
-        {
-            ViewData["Message"] = "Your contact page.";
 
-            return View();
-        }
-
-        public IActionResult Privacy()
+       [HttpGet]
+        public Dictionary<int, string> GetTown()
         {
-            return View();
+            List<Town> towns = db.Towns.ToList();
+            var list = new Dictionary<int, string> { { 1111111, "a" }, { 22222222, "b" } };
+            foreach (Town town in towns)
+            {
+
+                list.Add(town.Id, town.Name);
+            }
+
+            return list;
         }
+        
+
+
+
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

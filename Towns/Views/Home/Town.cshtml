@@ -1,0 +1,13 @@
+﻿@model IEnumerable<Towns.Models.Town>
+@{
+    ViewBag.Title = "Список городов";
+}
+<table class="table">
+    <tr><td>Название города</td></tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Name</td>
+        </tr>
+    }
+</table>
