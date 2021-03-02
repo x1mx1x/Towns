@@ -10,5 +10,6 @@ namespace Towns.Models
             Database.EnsureCreated();
         }
         public DbSet<Town> Towns { get; set; }
+        public DbSet<Town> Countries { get; set; }
     }
 }
